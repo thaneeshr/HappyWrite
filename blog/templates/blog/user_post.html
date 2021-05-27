@@ -10,8 +10,43 @@
                 <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
                 <small class="text-muted">{{ post.date_posted|date:"F d,Y" }}</small>
             </div>
+
             <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
+
+            <style type="text/css">
+                #module {
+                font-size: 1rem;
+                line-height: 1.5;
+                    }
+
+
+                #module #co{{ post.id }}.collapse:not(.show) {
+                display: block;
+                height: 3rem;
+                overflow: hidden;
+                    }
+
+                #module #co{{ post.id }}.collapsing {
+                  height: 3rem;
+                }
+
+                #module a.collapsed::after {
+                  content: '+ Show More';
+                }
+
+                #module a:not(.collapsed)::after {
+                  content: '- Show Less';
+                }
+
+
+            </style>
+
+
+            <div id="module" >
+            <p class="collapse article-content " id= "co{{ post.id }}" aria-expanded="false" >{{ post.content }}</p>
+            <a role="button" class="collapsed btn btn-secondary btn-sm active" data-toggle="collapse" href="#co{{post.id}}" aria-expanded="false" aria-controls="co{{post.id}}"></a>
+
+            </div>
         </div>
     </article>
     {% endfor %}
